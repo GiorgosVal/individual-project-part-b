@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/individualprojectb/IndividualProjectB.java</file>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/entities/Assignment.java</file>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/dao/EnrollmentDao.java</file>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/entities/Personnel.java</file>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/dao/AssignmentDao.java</file>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/entities/Homework.java</file>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/entities/Enrollment.java</file>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/dao/TrainerDao.java</file>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/entities/Trainer.java</file>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/validation/Validation.java</file>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/entities/LoginDao.java</file>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/dao/PersonnelDao.java</file>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/dao/StudentDao.java</file>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/entities/Login.java</file>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/dao/CourseDao.java</file>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/entities/Course.java</file>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/entities/AssignmentCourse.java</file>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/entities/Student.java</file>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/dao/HomeworkDao.java</file>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/dao/AssignmentCourseDao.java</file>
+            <file>file:/home/giorgos/NetBeansProjects/IndividualProjectB/src/dao/Dao.java</file>
+        </group>
+    </open-files>
+</project-private>
