@@ -227,6 +227,38 @@ public class Assignment {
         System.out.println();
     }
    
+   
+    
+  //* ------------------------------------------------------------------------- */
+// Assignments Delete
+//* ------------------------------------------------------------------------- */       
+    public static void deleteAssignments(Scanner scan) {
+        AssignmentDao cdao = new AssignmentDao();
+        boolean courseNeeded = true;
+        while (courseNeeded) {
+            printAssignments(cdao.getAssignments());
+            System.out.println("Select the Assignment you want to delete by its id, "
+                    + "or write 'C<' to return to the previous menu.");
+            int choise = Validation.positiveIntValidationWithReturn(scan);
+            if(choise == -1) {
+                courseNeeded = false;
+            } else {
+                Assignment s = cdao.getAssignmentById(choise);
+                if(s != null) {
+                    cdao.deleteAssignmentById(s.getId());
+                }
+            }
+        }
+
+    }   
+    
+    
+    
+    
+    
+    
+    
+    
     
     
 }

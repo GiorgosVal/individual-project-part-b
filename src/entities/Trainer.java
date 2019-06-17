@@ -204,7 +204,28 @@ public class Trainer {
     }
 
 
-    
+  //* ------------------------------------------------------------------------- */
+// Trainers Delete
+//* ------------------------------------------------------------------------- */       
+    public static void deleteTrainers(Scanner scan) {
+        TrainerDao cdao = new TrainerDao();
+        boolean courseNeeded = true;
+        while (courseNeeded) {
+            printTrainers(cdao.getTrainers());
+            System.out.println("Select the Trainer you want to delete by its id, "
+                    + "or write 'C<' to return to the previous menu.");
+            int choise = Validation.positiveIntValidationWithReturn(scan);
+            if(choise == -1) {
+                courseNeeded = false;
+            } else {
+                Trainer s = cdao.getTrainerById(choise);
+                if(s != null) {
+                    cdao.deleteTrainerById(s.getId());
+                }
+            }
+        }
+
+    }   
 
 
     

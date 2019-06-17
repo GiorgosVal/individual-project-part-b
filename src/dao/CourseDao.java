@@ -1,5 +1,6 @@
 package dao;
 
+import entities.Assignment;
 import entities.Course;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -18,6 +19,7 @@ public class CourseDao extends Dao {
     private final String insertCourse = "INSERT INTO courses (ctitle, cstream, ctype, cstart, cend) VALUES (?,?,?,?,?)";
     private final String getCourses = "SELECT * FROM courses";
     private final String getCourseById = "SELECT * FROM courses WHERE id=?";
+    private final String deleteCourseById = "DELETE FROM courses WHERE id=?";
 
     protected Connection getConnection() {
         try {
@@ -103,7 +105,37 @@ READ METHODS
         }
         return c;
     }
-   
+    
+    
+    
+/* ----------------------------------------------------------------------------
+DELETE METHODS
+ ---------------------------------------------------------------------------- */    
+    
+    public void deleteCourseById (int st_id) {
+        try {
+            PreparedStatement pst = getConnection().prepareStatement(deleteCourseById);
+            pst.setInt(1, st_id);
+            
+            AssignmentCourseDao acdao = new AssignmentCourseDao();
+            List<Assignment> assignments = acdao.getAssignmentsPerCourse(st_id);
+            for(Assignment a : assignments) {
+                acdao.unrelateAssignmentFromCourse(a);
+            }
+            
+            int result = pst.executeUpdate();
+            if (result > 0) {
+                System.out.println("Course deleted successfully.");
+                
+            } else {
+                System.out.println("Course not deleted.");
+            }
+            pst.close();
+            conn.close();
+        } catch (SQLException ex) {
+            System.out.println("Not deleted.");
+        }
+    }    
     
     
     

@@ -18,6 +18,8 @@ public class StudentDao extends Dao {
     private final String insertStudent = "INSERT INTO students (sfname, slname, sdob, sfees) VALUES (?,?,?,?)";
     private final String getStudents = "SELECT * FROM students";
     private final String getStudentById = "SELECT * FROM students WHERE id=?";
+    private final String deleteStudentById = "delete from students where id=?";
+    
 
     protected Connection getConnection() {
         try {
@@ -101,4 +103,58 @@ READ METHODS
         return c;
     }
 
+    
+/* ----------------------------------------------------------------------------
+DELETE METHODS
+ ---------------------------------------------------------------------------- */    
+    
+    public void deleteStudentById (int st_id) {
+        try {
+            PreparedStatement pst = getConnection().prepareStatement(deleteStudentById);
+            pst.setInt(1, st_id);
+
+            int result = pst.executeUpdate();       // η μέθοδος επιστρέφει ή τον αριθμό των γραμμών του πίνακα που εισήγαμε (insert), ή που διέγραψε (delete), ή του πίνακα γενικά (update) ή μηδέν
+            if (result > 0) {
+                System.out.println("Student deleted successfully.");
+                
+            } else {
+                System.out.println("Student not deleted.");
+            }
+            pst.close();
+            conn.close();
+        } catch (SQLException ex) {
+            System.out.println("Not deleted.");
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }

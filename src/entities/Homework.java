@@ -1,19 +1,23 @@
 package entities;
 
+import dao.AssignmentDao;
 import dao.HomeworkDao;
 import dao.StudentDao;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
 import validation.Validation;
 
 public class Homework {
+
     private int id;
     private int somark;
     private int stmark;
     private Student student;
     private Assignment assignment;
-    
+
     // GETTER
     public int getId() {
         return id;
@@ -34,9 +38,8 @@ public class Homework {
     public Assignment getAssignment() {
         return assignment;
     }
-    
-    // SETTER
 
+    // SETTER
     public void setId(int id) {
         this.id = id;
     }
@@ -44,7 +47,7 @@ public class Homework {
     public void setSomark(int somark) {
         this.somark = somark;
     }
-    
+
     public void setOralMarkWithValidation(Scanner scan) {
         boolean isNotValid = true;
         int mark = 0;
@@ -59,18 +62,15 @@ public class Homework {
             }
         }
     }
-    
-    
 
     public void setStmark(int stmark) {
         this.stmark = stmark;
     }
-    
+
     public void setStmarkWithValidation(Scanner scan) {
         int stmark = Validation.maxIntValidationZeroBased(100, scan);
         this.stmark = stmark;
     }
-    
 
     public void setStudent(Student student) {
         this.student = student;
@@ -79,10 +79,8 @@ public class Homework {
     public void setAssignment(Assignment assignment) {
         this.assignment = assignment;
     }
-    
-    
-    // CONSTRUCTORS
 
+    // CONSTRUCTORS
     public Homework() {
     }
 
@@ -100,9 +98,8 @@ public class Homework {
         this.student = student;
         this.assignment = assignment;
     }
-    
-    // EQUALS
 
+    // EQUALS
     @Override
     public int hashCode() {
         int hash = 5;
@@ -143,20 +140,16 @@ public class Homework {
         }
         return true;
     }
-    
-    
-    // TO STRING
 
+    // TO STRING
     @Override
     public String toString() {
         return "Homework{" + "id=" + id + ", somark=" + somark + ", stmark=" + stmark + ", student=" + student + ", assignment=" + assignment + '}';
     }
-    
-    
+
 //* ------------------------------------------------------------------------- */
 // Homework Print
 //* ------------------------------------------------------------------------- */        
-    
     public static void printHomeworks(List<Homework> homeworks) {
         String line = "-";
         for (int i = 0; i < 112; i++) {
@@ -179,9 +172,8 @@ public class Homework {
         System.out.println(line);
         System.out.println();
     }
-    
-    
-        public static void printHomeworksWithId(List<Homework> homeworks) {
+
+    public static void printHomeworksWithId(List<Homework> homeworks) {
         String line = "-";
         for (int i = 0; i < 119; i++) {
             line += "-";
@@ -191,7 +183,7 @@ public class Homework {
         System.out.println(line);
         System.out.printf("%37s%s\n", " ", "A S S I G N M E N T S   O F   S T U D E N T");
         System.out.println(line);
-        System.out.printf("%-7s%-40s%-50s%11s%11s\n","id", "Course", "Assignment", "Oral Mark", "Total Mark");
+        System.out.printf("%-7s%-40s%-50s%11s%11s\n", "id", "Course", "Assignment", "Oral Mark", "Total Mark");
         System.out.println(line);
         for (Homework s : homeworks) {
             int h_id = s.getId();
@@ -204,9 +196,34 @@ public class Homework {
         System.out.println(line);
         System.out.println();
     }
- 
-    
-   /* ------------------------------------------------------------------------- */
+
+    public static void printWeeksHomeworks(List<Homework> homeworks) {
+        String line = "-";
+        for (int i = 0; i < 169; i++) {
+            line += "-";
+        }
+
+        System.out.println();
+        System.out.println(line);
+        System.out.printf("%62s%s\n", " ", "A S S I G N M E N T S   O F   T H E   W E E K");
+        System.out.println(line);
+        System.out.printf("%-7s%-20s%-30s%-40s%-50s%11s%11s\n", "id", "First Name", "Last Name", "Course", "Assignment", "Oral Mark", "Total Mark");
+        System.out.println(line);
+        for (Homework s : homeworks) {
+            int h_id = s.getId();
+            String fName = s.getStudent().getfNameReformed();
+            String lName = s.getStudent().getlNameReformed();
+            String course = s.getAssignment().getAcourseTitle();
+            String assignment = s.getAssignment().getAtitle();
+            int omark = s.getSomark();
+            int tmark = s.getStmark();
+            System.out.printf("%-7s%-20s%-30s%-40s%-50s%11d%11d\n", h_id, fName, lName, course, assignment, omark, tmark);
+        }
+        System.out.println(line);
+        System.out.println();
+    }
+
+    /* ------------------------------------------------------------------------- */
 // Assignments Per Course Per Student Print
 //* ------------------------------------------------------------------------- */        
     public static void printHomeworkOfStudent(Scanner scan) {
@@ -229,16 +246,15 @@ public class Homework {
                     Homework.printHomeworks(homework);
                     System.out.println("Press 1 to repeat or 'C<' to return to the previous menu.");
                     choise = Validation.maxValidationWithReturn(1, scan);
-                    if(choise== -1) {
+                    if (choise == -1) {
                         studentNeeded = false;
                     }
                 }
             }
         }
 
-    } 
-    
-    
+    }
+
     public static void updateMarksOfStudent(Scanner scan) {
         HomeworkDao hdao = new HomeworkDao();
         boolean studentNeeded = true;
@@ -254,9 +270,9 @@ public class Homework {
                 if (s != null) {
                     System.out.println("You chose the Student " + s.getfNameReformed() + " " + s.getlNameReformed() + ".");
                     List<Homework> homework = hdao.getHomeworkPerCoursePerStudent(s.getId());
-                    
+
                     boolean homeworkNeeded = true;
-                    while(homeworkNeeded) {
+                    while (homeworkNeeded) {
                         System.out.println("\n\nSTUDENT " + s.getfNameReformed() + " " + s.getlNameReformed());
                         Homework.printHomeworksWithId(homework);
                         System.out.println("Select the id of Assignment or write 'C<' to return to the previous menu.");
@@ -273,36 +289,86 @@ public class Homework {
                                 hdao.updateHomeworkMarks(h);
                                 homeworkNeeded = false;
                             }
-                        } 
+                        }
                     }
                 }
             }
         }
-        
-        
-        
-        
-        
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+    public static void weeksAssinments(Scanner scan) {
+        boolean checkNeeded = true;
+        while (checkNeeded) {
+
+            // Finding the date range in which the assignments are
+            AssignmentDao adao = new AssignmentDao();
+            LocalDate endDate = adao.getMaxDate();
+            LocalDate startDate = adao.getMinDate();
+            if(endDate != null && startDate != null) {
+                String end = Validation.LocalDate_to_String(endDate);
+                String start = Validation.LocalDate_to_String(startDate);
+
+                System.out.println("Enter a date to see the Students who have to submit"
+                        + " assignments for the according week. Date format dd/mm/yyyy.");
+                System.out.println("According to the data, the submission dates begin on "
+                        + start + " and end on " + end);
+
+                // validation input
+                LocalDate request = null;
+                boolean validation = true;
+                while (validation) {
+                    request = Validation.dateValidation(scan);
+                    if (request.isBefore(startDate) || request.isAfter(endDate)) {
+                        System.out.println("Enter a date from " + start + " to " + end);
+                        System.out.println();
+                    } else {
+                        validation = false;
+                    }
+                }
+
+                // Finding the week
+                LocalDate requestMax = request;
+                LocalDate requestMin = request;
+                DayOfWeek firstDayOfWeek = request.getDayOfWeek();
+                DayOfWeek lastDayOfWeek = request.getDayOfWeek();
+
+                while (firstDayOfWeek != DayOfWeek.MONDAY) {
+                    firstDayOfWeek = firstDayOfWeek.minus(1);
+                    requestMin = requestMin.minusDays(1);
+                }
+
+                while (lastDayOfWeek != DayOfWeek.FRIDAY) {
+                    if (lastDayOfWeek.getValue() < 5) {
+                        lastDayOfWeek = lastDayOfWeek.plus(1);
+                        requestMax = requestMax.plusDays(1);
+                    } else {
+                        lastDayOfWeek = lastDayOfWeek.minus(1);
+                        requestMax = requestMax.minusDays(1);
+                    }
+                }
+
+                start = Validation.LocalDate_to_String(requestMin);
+                end = Validation.LocalDate_to_String(requestMax);
+                String startSQL = Validation.LocalDate_to_String_for_SQL(requestMin);
+                String endSQL = Validation.LocalDate_to_String_for_SQL(requestMax);
+
+                HomeworkDao hdao = new HomeworkDao();
+                List<Homework> weeksHomeworks = hdao.getWeeksHomeworks(startSQL, endSQL);
+
+                System.out.println("\n\nAssignments from " + start + " to " + end + ".");
+                printWeeksHomeworks(weeksHomeworks);
+                System.out.println("Press 1 to repeat or type 'C<' to return to the previous menu.");
+                int choise = Validation.maxValidationWithReturn(1, scan);
+                if (choise == -1) {
+                    checkNeeded = false;
+                }
+            } else {
+                System.out.println("*** There are no assignments with submission dates. ***");
+                checkNeeded = false;
+            }
+            
+        }
+
+    }
+
 }
-
-
-

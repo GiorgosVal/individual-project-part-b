@@ -23,6 +23,7 @@ public class HomeworkDao extends Dao {
     private final String getStudentWithHomeworkById = "SELECT e.st_id FROM enrollments AS e, students AS s WHERE e.st_id=s.id GROUP BY e.st_id HAVING st_id=?";
     private final String getHomeworkById = "SELECT * FROM homeworks WHERE id=?";
     private final String updateHomeworkMark = "UPDATE homeworks SET somark=?, stmark=? WHERE id=?";
+    private final String getWeeksHomeworks = "SELECT h.id, h.somark, h.stmark, a.id, s.id FROM assignments AS a, students AS s, homeworks AS h WHERE s.id=h.st_id AND h.as_id=a.id AND asubDate BETWEEN ? AND ?";
     
     protected Connection getConnection() {
         try {
@@ -146,6 +147,35 @@ READ METHODS
             System.out.println("*** Sorry, but something wrong happend. ***");
         }
         return h;
+    }
+    
+    
+    
+    
+    public List<Homework> getWeeksHomeworks(String start, String end) {
+        List<Homework> list = new ArrayList();
+        StudentDao sdao = new StudentDao();
+        AssignmentDao adao = new AssignmentDao();
+        try {
+            PreparedStatement pst = getConnection().prepareStatement(getWeeksHomeworks);
+            pst.setString(1, start);
+            pst.setString(2, end);
+            ResultSet rs = pst.executeQuery();
+            
+            while(rs.next()) {
+                int homeworkId = rs.getInt(1);
+                int omark = rs.getInt(2);
+                int tmark = rs.getInt(3);
+                Student student = sdao.getStudentById(rs.getInt(5));
+                Assignment assignment = adao.getAssignmentById(rs.getInt(4));
+                Homework h = new Homework(homeworkId, omark, tmark, student, assignment);
+                list.add(h);
+            }
+            closeConnections(rs, pst);
+        } catch (SQLException ex) {
+            System.out.println("*** Sorry, but something wrong happend. ***");
+        }
+        return list;
     }
     
     

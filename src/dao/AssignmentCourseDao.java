@@ -22,6 +22,7 @@ public class AssignmentCourseDao extends Dao {
     private final String getAvailableAssignments = "SELECT * FROM assignments WHERE assignments.co_id IS NULL";
     private final String getAvailableAssignmentById = "SELECT * FROM assignments WHERE assignments.co_id IS NULL AND id=?";
     private final String relateAssignmentToCourse = "UPDATE assignments SET asubDate=?, co_id=? WHERE id=?";
+    private final String unrelateAssignmentFromCourse = "UPDATE assignments SET asubDate=null, co_id=null WHERE id=?";
     
     protected Connection getConnection() {
         try {
@@ -151,7 +152,24 @@ UPDATE METHODS
         return insertOK;
     }  
     
-    
+    public void unrelateAssignmentFromCourse(Assignment a) {
+        try {
+            PreparedStatement pst = getConnection().prepareStatement(unrelateAssignmentFromCourse);
+            
+            pst.setInt(1, a.getId());
+            int result = pst.executeUpdate();
+            if (result > 0) {
+                System.out.println("Assignment removed successfully from the Course.");
+            } else {
+                System.out.println("Assignment not removed from the Course.");
+            }
+            pst.close();
+            conn.close();
+        } catch (SQLException ex) {
+
+            System.out.println("Not removed.");
+        }
+    }  
     
     
     

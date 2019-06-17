@@ -172,10 +172,13 @@ public class Enrollment {
                             studentNeeded = false;
                         } else {
                                 Student s = sdao.getStudentById(choise);
-                                boolean studentISavailable = edao.checkIfStudentISavailable(c.getId(), s.getId());
-                                if(!studentISavailable) {
-                                    s = null;
+                                if (s!=null) {
+                                    boolean studentISavailable = edao.checkIfStudentISavailable(c.getId(), s.getId());
+                                    if (!studentISavailable) {
+                                        s = null;
+                                    } 
                                 }
+                                
                             if(s != null) {
                                 System.out.println("You chose the Student " + s.getfNameReformed() + " " + s.getlNameReformed() + ".");
                                 boolean insertOK = edao.addStudentToCourse(c.getId(), s.getId());

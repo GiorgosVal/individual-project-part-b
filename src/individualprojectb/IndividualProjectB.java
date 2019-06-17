@@ -1,13 +1,11 @@
 package individualprojectb;
 
 
-import dao.AssignmentCourseDao;
 import dao.AssignmentDao;
 import dao.CourseDao;
 import dao.EnrollmentDao;
-import dao.HomeworkDao;
-import dao.PersonnelDao;
 import dao.StudentDao;
+import dao.SyntheticDao;
 import dao.TrainerDao;
 import entities.Assignment;
 import entities.AssignmentCourse;
@@ -18,8 +16,6 @@ import entities.Login;
 import entities.Personnel;
 import entities.Student;
 import entities.Trainer;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 import validation.Validation;
 
@@ -42,12 +38,20 @@ public class IndividualProjectB {
         TrainerDao tdao = new TrainerDao();
         AssignmentDao adao = new AssignmentDao();
         EnrollmentDao edao = new EnrollmentDao();
-        //HomeworkDao hdao = new HomeworkDao();
-        PersonnelDao pdao = new PersonnelDao();
-        AssignmentCourseDao acdao = new AssignmentCourseDao();
         int choise = 0;
-                
         boolean start=Login.login(scan);
+        
+        if (start) {
+            System.out.println("Do you want to continue with synthetic data?\n"
+                    + "1. Yes\n2.No\n");
+            choise = Validation.maxValidation(2, scan);
+            if (choise == 1) {
+                SyntheticDao syndao = new SyntheticDao();
+                syndao.getSyntheticData();
+            }
+        }
+        
+        
         while(start) {
             System.out.println("W E L C O M E   S C R E E N");
             System.out.println("Welcome to this app.\n\n"
@@ -60,7 +64,7 @@ public class IndividualProjectB {
                     + "3. Update data to the database.\n4. Delete data from the database.\n"
                     + "\nWrite 'C<' if you want to EXIT the program.");
 
-            choise = Validation.maxValidationWithReturn(3, scan);
+            choise = Validation.maxValidationWithReturn(4, scan);
             switch(choise) {
                 case -1:
                     start=false;
@@ -137,15 +141,15 @@ public class IndividualProjectB {
                     while(readNeeded) {
                         System.out.println("\nR E A D    D A T A    M E N U\n");
                         System.out.println("You have the following options:\n");
-                        System.out.println(" 1. List all Courses.");            // OK
-                        System.out.println(" 2. List all Students.");           // OK
-                        System.out.println(" 3. List all Trainers.");           // OK
-                        System.out.println(" 4. List all Assignments.\n");      // OK
-                        System.out.println(" 5. List all Trainers per Course.");    // OK
-                        System.out.println(" 6. List all Students per Course.");    // OK
-                        System.out.println(" 7. List all Assignments per Course."); // OK
-                        System.out.println(" 8. List all Assignments per Course per Student."); // OK
-                        System.out.println(" 9. List all Students who enrolled multiple Courses."); // OK
+                        System.out.println(" 1. List all Courses.");
+                        System.out.println(" 2. List all Students."); 
+                        System.out.println(" 3. List all Trainers.");
+                        System.out.println(" 4. List all Assignments.\n");
+                        System.out.println(" 5. List all Trainers per Course.");
+                        System.out.println(" 6. List all Students per Course.");
+                        System.out.println(" 7. List all Assignments per Course.");
+                        System.out.println(" 8. List all Assignments per Course per Student.");
+                        System.out.println(" 9. List all Students who enrolled multiple Courses.");
                         System.out.println("10. List all Assignments that need to be submitted at a given week.\n");
                         System.out.println(returnToPrevius());
                         choise = Validation.maxValidationWithReturn(10, scan);
@@ -182,7 +186,7 @@ public class IndividualProjectB {
                                 Student.printStudents(edao.getStudentsWithMultipleEnrollments());
                                 break;
                             case 10:
-                                // query
+                                Homework.weeksAssinments(scan);
                                 break;
                         }
                     }
@@ -207,8 +211,36 @@ public class IndividualProjectB {
                     }
                     
                     break;
-                case 4: 
-                    System.out.println("\nD E L E T E    D A T A    M E N U\n");
+                case 4:
+                    boolean deletionNeeded = true;
+                    while(deletionNeeded) {
+                        System.out.println("\nD E L E T E    D A T A    M E N U\n");
+                        System.out.println("Currently you have the following options:\n");
+                        System.out.println("1. Delete Courses.");
+                        System.out.println("2. Delete Students.");
+                        System.out.println("3. Delete Trainers.");
+                        System.out.println("4. Delete Assignments.");
+                        System.out.println(returnToPrevius());
+                        choise = Validation.maxValidationWithReturn(4, scan);
+                        switch (choise) {
+                            case -1:
+                                deletionNeeded = false;
+                                break;
+                            case 1:
+                                Course.deleteCourses(scan);
+                                break;
+                            case 2:
+                                Student.deleteStudents(scan);
+                                break;
+                            case 3:
+                                Trainer.deleteTrainers(scan);
+                                break;
+                            case 4:
+                                Assignment.deleteAssignments(scan);
+                                break;
+                        }
+                    }
+                    
                     break;
             }               
         }

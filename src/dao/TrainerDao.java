@@ -17,6 +17,7 @@ public class TrainerDao extends Dao {
     private final String insertTrainer = "INSERT INTO trainers (tfname, tlname, tsubject) VALUES (?,?,?)";
     private final String getTrainers = "SELECT * FROM trainers";
     private final String getTrainerById = "SELECT * FROM trainers WHERE id=?";
+    private final String deleteTrainerById = "DELETE FROM trainers WHERE id=?";
     
     protected Connection getConnection() {
         try {
@@ -97,7 +98,28 @@ READ METHODS
         return c;
     }
     
+  /* ----------------------------------------------------------------------------
+DELETE METHODS
+ ---------------------------------------------------------------------------- */    
     
+    public void deleteTrainerById (int st_id) {
+        try {
+            PreparedStatement pst = getConnection().prepareStatement(deleteTrainerById);
+            pst.setInt(1, st_id);
+
+            int result = pst.executeUpdate();
+            if (result > 0) {
+                System.out.println("Trainer deleted successfully.");
+                
+            } else {
+                System.out.println("Trainer not deleted.");
+            }
+            pst.close();
+            conn.close();
+        } catch (SQLException ex) {
+            System.out.println("Not deleted.");
+        }
+    }  
     
     
 

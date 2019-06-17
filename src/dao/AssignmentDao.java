@@ -20,6 +20,9 @@ public class AssignmentDao extends Dao {
     private final String insertAssignment = "INSERT INTO assignments (atitle, adescr) VALUES (?,?)";
     private final String getAssignments = "SELECT * FROM assignments";
     private final String getAssignmentById = "SELECT * FROM assignments WHERE id=?";
+    private final String deleteAssignmentById = "DELETE FROM assignments WHERE id=?";
+    private final String getDateOfLastAssignment = "select max(asubDate) from assignments";
+    private final String getDateOfFirstAssignment = "select min(asubDate) from assignments";
 
     protected Connection getConnection() {
         try {
@@ -128,11 +131,72 @@ READ METHODS
             System.out.println("*** Assignment not selected. You probably entered wrong id. ***");
         }
         return c;
-    }    
+    }
+    
+    
+    public LocalDate getMaxDate() {
+        LocalDate date = null;
+        try {
+            Statement st = getConnection().createStatement();
+            ResultSet rs = st.executeQuery(getDateOfLastAssignment);
+            rs.next();
+            Date d = rs.getDate(1);
+            if(d != null) {
+                date = d.toLocalDate();
+            }
+            closeConnections(rs, st);
+        } catch (SQLException ex) {
+            System.out.println("*** Date not found. ***");
+        }
+        return date;
+    }
+    
+    
+    
+    public LocalDate getMinDate() {
+        LocalDate date = null;
+        try {
+            Statement st = getConnection().createStatement();
+            ResultSet rs = st.executeQuery(getDateOfFirstAssignment);
+            rs.next();
+            Date d = rs.getDate(1);
+            if(d != null) {
+                date = d.toLocalDate();
+            }
+            closeConnections(rs, st);
+        } catch (SQLException ex) {
+            System.out.println("*** Date not found. ***");
+        }
+        return date;
+    }
     
     
     
     
+    
+    
+/* ----------------------------------------------------------------------------
+DELETE METHODS
+ ---------------------------------------------------------------------------- */    
+    
+    public void deleteAssignmentById (int st_id) {
+        try {
+            PreparedStatement pst = getConnection().prepareStatement(deleteAssignmentById);
+            pst.setInt(1, st_id);
+
+            int result = pst.executeUpdate();
+            if (result > 0) {
+                System.out.println("Assignment deleted successfully.");
+                
+            } else {
+                System.out.println("Assignment not deleted.");
+            }
+            pst.close();
+            conn.close();
+        } catch (SQLException ex) {
+            System.out.println("Not deleted.");
+        }
+    }
     
     
     

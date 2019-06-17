@@ -261,6 +261,30 @@ public class Course {
     }
     
     
+//* ------------------------------------------------------------------------- */
+// Courses Delete
+//* ------------------------------------------------------------------------- */       
+    public static void deleteCourses(Scanner scan) {
+        CourseDao cdao = new CourseDao();
+        boolean courseNeeded = true;
+        while (courseNeeded) {
+            printCourses(cdao.getCourses());
+            System.out.println("Select the Course you want to delete by its id, "
+                    + "or write 'C<' to return to the previous menu.");
+            int choise = Validation.positiveIntValidationWithReturn(scan);
+            if(choise == -1) {
+                courseNeeded = false;
+            } else {
+                Course s = cdao.getCourseById(choise);
+                if(s != null) {
+                    cdao.deleteCourseById(s.getId());
+                }
+            }
+        }
+
+    }    
+    
+    
     
     
     

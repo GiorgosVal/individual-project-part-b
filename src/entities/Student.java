@@ -16,11 +16,10 @@ public class Student {
     private double fees;
 
     // GETTERS
-
     public int getId() {
         return id;
     }
-    
+
     public String getfName() {
         return fName;
     }
@@ -119,7 +118,7 @@ public class Student {
     public void setFeesWithValidation(Scanner scan) {
         boolean isNotValid = true;
         while (isNotValid) {
-            int fees = Validation.positiveIntValidation(scan);
+            int fees = Validation.positiveIntValidationZeroBased(scan);
             if (fees > 99999) {
                 System.out.println("Fees cannot exceed €99,999.00");
                 System.out.println();
@@ -218,13 +217,15 @@ public class Student {
 //* ------------------------------------------------------------------------- */    
     public static void printStudents(List<Student> list) {
         String line = "-";
-        for(int i = 0; i < 75; i++) {line += "-";}
-        
+        for (int i = 0; i < 75; i++) {
+            line += "-";
+        }
+
         System.out.println();
         System.out.println(line);
-        System.out.printf("%25s%s\n"," ","S T U D E N T S   L I S T");
+        System.out.printf("%25s%s\n", " ", "S T U D E N T S   L I S T");
         System.out.println(line);
-        System.out.printf("%-5s%-20s%-25s%15s%10s\n","Id", "First Name", "Last Name", "Date of Birth", "Fees");
+        System.out.printf("%-5s%-20s%-25s%15s%10s\n", "Id", "First Name", "Last Name", "Date of Birth", "Fees");
         System.out.println(line);
         for (Student s : list) {
             int id = s.getId();
@@ -236,6 +237,29 @@ public class Student {
         }
         System.out.println(line);
         System.out.println();
+    }
+
+//* ------------------------------------------------------------------------- */
+// Students Delete
+//* ------------------------------------------------------------------------- */       
+    public static void deleteStudents(Scanner scan) {
+        StudentDao sdao = new StudentDao();
+        boolean studentNeeded = true;
+        while (studentNeeded) {
+            printStudents(sdao.getStudents());
+            System.out.println("Select the Student you want to delete by his id, "
+                    + "or write 'C<' to return to the previous menu.");
+            int choise = Validation.positiveIntValidationWithReturn(scan);
+            if(choise == -1) {
+                studentNeeded = false;
+            } else {
+                Student s = sdao.getStudentById(choise);
+                if(s != null) {
+                    sdao.deleteStudentById(s.getId());
+                }
+            }
+        }
+
     }
 
 }
