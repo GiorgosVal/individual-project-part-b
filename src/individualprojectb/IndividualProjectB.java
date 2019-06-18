@@ -42,12 +42,16 @@ public class IndividualProjectB {
         boolean start=Login.login(scan);
         
         if (start) {
+            SyntheticDao syndao = new SyntheticDao();
             System.out.println("Do you want to continue with synthetic data?\n"
-                    + "1. Yes\n2.No\n");
-            choise = Validation.maxValidation(2, scan);
+                    + "1. Yes\n2. No (This will reset all tables)\n3. Continue anyway (may include synthetic data)");
+            choise = Validation.maxValidation(3, scan);
             if (choise == 1) {
-                SyntheticDao syndao = new SyntheticDao();
                 syndao.getSyntheticData();
+            } else if (choise == 2) {
+                syndao.resetTables();
+            } else {
+                
             }
         }
         

@@ -12,6 +12,7 @@ import java.util.logging.Logger;
 public class SyntheticDao extends Dao {
 
     private final String getSyntheticData = "CALL syntheticData()";
+    private final String resetTables = "call resetDB()";
 
     protected Connection getConnection() {
         try {
@@ -40,6 +41,18 @@ public class SyntheticDao extends Dao {
             closeConnections(rs, st);
         } catch (SQLException ex) {
             System.out.println("You have already entered the synthetic data. Proceeding...\n\n\n");
+        }
+        
+    }
+    
+        public void resetTables() {
+        try {
+            Statement st = getConnection().createStatement();
+            ResultSet rs = st.executeQuery(resetTables);
+            closeConnections(rs, st);
+            System.out.println("Tables reset successful.");
+        } catch (SQLException ex) {
+            System.out.println("Tables not reset.");
         }
         
     }
