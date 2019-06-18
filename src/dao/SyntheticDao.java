@@ -50,7 +50,7 @@ public class SyntheticDao extends Dao {
             Statement st = getConnection().createStatement();
             ResultSet rs = st.executeQuery(resetTables);
             closeConnections(rs, st);
-            System.out.println("Tables reset successful.");
+            System.out.println("Tables reset successful.\n\n\n");
         } catch (SQLException ex) {
             System.out.println("Tables not reset.");
         }

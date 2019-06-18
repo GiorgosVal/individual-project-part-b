@@ -236,28 +236,33 @@ public class Course {
 //* ------------------------------------------------------------------------- */        
     
     public static void printCourses(List<Course> list) {
-        String line = "-";
-        for (int i = 0; i < 86; i++) {
-            line += "-";
-        }
+        if(list.isEmpty()) {
+            System.out.println("*** The Courses list is empty. ***\n\n");
+        } else {
+            String line = "-";
+            for (int i = 0; i < 86; i++) {
+                line += "-";
+            }
 
-        System.out.println();
-        System.out.println(line);
-        System.out.printf("%31s%s\n", " ", "C O U R S E S   L I S T");
-        System.out.println(line);
-        System.out.printf("%-5s%-25s%-15s%-15s%13s%13s\n", "Id", "Title", "Stream", "Type", "Start Date", "End Date");
-        System.out.println(line);
-        for (Course s : list) {
-            int id = s.getId();
-            String ctitle = s.getCtitle();
-            String cstream = s.getCstream();
-            String ctype = s.getCtype();
-            String cstart = Validation.LocalDate_to_String(s.getCstart());
-            String cend = Validation.LocalDate_to_String(s.getCend());
-            System.out.printf("%-5s%-25s%-15s%-15s%13s%13s\n", id, ctitle, cstream, ctype, cstart, cend);
+            System.out.println();
+            System.out.println(line);
+            System.out.printf("%31s%s\n", " ", "C O U R S E S   L I S T");
+            System.out.println(line);
+            System.out.printf("%-5s%-25s%-15s%-15s%13s%13s\n", "Id", "Title", "Stream", "Type", "Start Date", "End Date");
+            System.out.println(line);
+            for (Course s : list) {
+                int id = s.getId();
+                String ctitle = s.getCtitle();
+                String cstream = s.getCstream();
+                String ctype = s.getCtype();
+                String cstart = Validation.LocalDate_to_String(s.getCstart());
+                String cend = Validation.LocalDate_to_String(s.getCend());
+                System.out.printf("%-5s%-25s%-15s%-15s%13s%13s\n", id, ctitle, cstream, ctype, cstart, cend);
+            }
+            System.out.println(line);
+            System.out.println(); 
         }
-        System.out.println(line);
-        System.out.println();
+        
     }
     
     

@@ -230,27 +230,34 @@ public class Homework {
         StudentDao sdao = new StudentDao();
         boolean studentNeeded = true;
         while (studentNeeded) {
-            Student.printStudents(sdao.getStudents());
-            System.out.println("Select the id of the Student.");
-            System.out.println("Write 'C<' if you want to return to the previous menu.");
-            int choise = Validation.positiveIntValidationWithReturn(scan);
-            if (choise == -1) {
+            List<Student> students = sdao.getStudents();
+            if(students.isEmpty()) {
+                System.out.println("*** The Students list is empty. ***\n\n");
                 studentNeeded = false;
             } else {
-                Student s = sdao.getStudentById(choise);
-                if (s != null) {
-                    System.out.println("You chose the Student " + s.getfNameReformed() + " " + s.getlNameReformed() + ".");
-                    HomeworkDao hdao = new HomeworkDao();
-                    List<Homework> homework = hdao.getHomeworkPerCoursePerStudent(s.getId());
-                    System.out.println("\n\nSTUDENT " + s.getfNameReformed() + " " + s.getlNameReformed());
-                    Homework.printHomeworks(homework);
-                    System.out.println("Press 1 to repeat or 'C<' to return to the previous menu.");
-                    choise = Validation.maxValidationWithReturn(1, scan);
-                    if (choise == -1) {
-                        studentNeeded = false;
+                Student.printStudents(students);
+                System.out.println("Select the id of the Student.");
+                System.out.println("Write 'C<' if you want to return to the previous menu.");
+                int choise = Validation.positiveIntValidationWithReturn(scan);
+                if (choise == -1) {
+                    studentNeeded = false;
+                } else {
+                    Student s = sdao.getStudentById(choise);
+                    if (s != null) {
+                        System.out.println("You chose the Student " + s.getfNameReformed() + " " + s.getlNameReformed() + ".");
+                        HomeworkDao hdao = new HomeworkDao();
+                        List<Homework> homework = hdao.getHomeworkPerCoursePerStudent(s.getId());
+                        System.out.println("\n\nSTUDENT " + s.getfNameReformed() + " " + s.getlNameReformed());
+                        Homework.printHomeworks(homework);
+                        System.out.println("Press 1 to repeat or 'C<' to return to the previous menu.");
+                        choise = Validation.maxValidationWithReturn(1, scan);
+                        if (choise == -1) {
+                            studentNeeded = false;
+                        }
                     }
-                }
+                } 
             }
+
         }
 
     }
@@ -259,40 +266,47 @@ public class Homework {
         HomeworkDao hdao = new HomeworkDao();
         boolean studentNeeded = true;
         while (studentNeeded) {
-            Student.printStudents(hdao.getStudentsWithAssignments());
-            System.out.println("Select the id of the Student.");
-            System.out.println("Write 'C<' if you want to return to the previous menu.");
-            int choise = Validation.positiveIntValidationWithReturn(scan);
-            if (choise == -1) {
+            List<Student> students = hdao.getStudentsWithAssignments();
+            if(students.isEmpty()) {
+                System.out.println("*** There are no Students with Assignmnents. ***\n\n");
                 studentNeeded = false;
             } else {
-                Student s = hdao.getStudentWithHomeworkById(choise);
-                if (s != null) {
-                    System.out.println("You chose the Student " + s.getfNameReformed() + " " + s.getlNameReformed() + ".");
-                    List<Homework> homework = hdao.getHomeworkPerCoursePerStudent(s.getId());
+                Student.printStudents(students);
+                System.out.println("Select the id of the Student.");
+                System.out.println("Write 'C<' if you want to return to the previous menu.");
+                int choise = Validation.positiveIntValidationWithReturn(scan);
+                if (choise == -1) {
+                    studentNeeded = false;
+                } else {
+                    Student s = hdao.getStudentWithHomeworkById(choise);
+                    if (s != null) {
+                        System.out.println("You chose the Student " + s.getfNameReformed() + " " + s.getlNameReformed() + ".");
+                        List<Homework> homework = hdao.getHomeworkPerCoursePerStudent(s.getId());
 
-                    boolean homeworkNeeded = true;
-                    while (homeworkNeeded) {
-                        System.out.println("\n\nSTUDENT " + s.getfNameReformed() + " " + s.getlNameReformed());
-                        Homework.printHomeworksWithId(homework);
-                        System.out.println("Select the id of Assignment or write 'C<' to return to the previous menu.");
-                        choise = Validation.positiveIntValidationWithReturn(scan);
-                        if (choise == -1) {
-                            homeworkNeeded = false;
-                        } else {
-                            Homework h = hdao.getHomeworkById(choise);
-                            if (h != null) {
-                                System.out.println("Enter the student's total mark in the assignment.");
-                                h.setStmarkWithValidation(scan);
-                                System.out.println("Enter the student's oral mark in the assignment.");
-                                h.setOralMarkWithValidation(scan);
-                                hdao.updateHomeworkMarks(h);
+                        boolean homeworkNeeded = true;
+                        while (homeworkNeeded) {
+                            System.out.println("\n\nSTUDENT " + s.getfNameReformed() + " " + s.getlNameReformed());
+                            Homework.printHomeworksWithId(homework);
+                            System.out.println("Select the id of Assignment or write 'C<' to return to the previous menu.");
+                            choise = Validation.positiveIntValidationWithReturn(scan);
+                            if (choise == -1) {
                                 homeworkNeeded = false;
+                            } else {
+                                Homework h = hdao.getHomeworkById(choise);
+                                if (h != null) {
+                                    System.out.println("Enter the student's total mark in the assignment.");
+                                    h.setStmarkWithValidation(scan);
+                                    System.out.println("Enter the student's oral mark in the assignment.");
+                                    h.setOralMarkWithValidation(scan);
+                                    hdao.updateHomeworkMarks(h);
+                                    homeworkNeeded = false;
+                                }
                             }
                         }
                     }
-                }
+                } 
             }
+
         }
     }
 

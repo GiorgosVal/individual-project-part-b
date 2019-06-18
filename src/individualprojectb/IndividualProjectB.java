@@ -43,8 +43,8 @@ public class IndividualProjectB {
         
         if (start) {
             SyntheticDao syndao = new SyntheticDao();
-            System.out.println("Do you want to continue with synthetic data?\n"
-                    + "1. Yes\n2. No (This will reset all tables)\n3. Continue anyway (may include synthetic data)");
+            System.out.println("Do you want to continue with synthetic data?\n\n"
+                    + "1. Yes\n2. No (This will reset all tables)\n3. Continue anyway (may include synthetic data)\n\n");
             choise = Validation.maxValidation(3, scan);
             if (choise == 1) {
                 syndao.getSyntheticData();
@@ -57,13 +57,13 @@ public class IndividualProjectB {
         
         
         while(start) {
-            System.out.println("W E L C O M E   S C R E E N");
+            System.out.println("\n\nW E L C O M E   S C R E E N");
             System.out.println("Welcome to this app.\n\n"
                     + "This CRUD console app simulates a private school's data handling program.\n"
                     + "You can insert courses, trainers, students and assignments.\n"
                     + "You also can correlate the data given and output data.\n\n\n"
                     + "You have the following options:\n"
-                    + "(Choose 1 or 3 respectively)\n\n"
+                    + "(Write 1-4 respectively)\n\n"
                     + "1. Insert data to the database.\n2. Read data from the database.\n"
                     + "3. Update data to the database.\n4. Delete data from the database.\n"
                     + "\nWrite 'C<' if you want to EXIT the program.");
@@ -76,7 +76,7 @@ public class IndividualProjectB {
                 case 1:
                     boolean inputNeeded = true;
                     while (inputNeeded) {
-                        System.out.println("\nI N S E R T    D A T A    M E N U\n");
+                        System.out.println("\n\nI N S E R T    D A T A    M E N U\n");
                         System.out.println("You have the following options:\n");
                         System.out.println("1. Create Courses.");
                         System.out.println("2. Create Student profiles.");
@@ -143,7 +143,7 @@ public class IndividualProjectB {
                 case 2:
                     boolean readNeeded=true;
                     while(readNeeded) {
-                        System.out.println("\nR E A D    D A T A    M E N U\n");
+                        System.out.println("\n\nR E A D    D A T A    M E N U\n");
                         System.out.println("You have the following options:\n");
                         System.out.println(" 1. List all Courses.");
                         System.out.println(" 2. List all Students."); 
@@ -198,7 +198,7 @@ public class IndividualProjectB {
                 case 3:
                     boolean updateNeeded = true;
                     while(updateNeeded) {
-                        System.out.println("\nU P D A T E    D A T A    M E N U\n");
+                        System.out.println("\n\nU P D A T E    D A T A    M E N U\n");
                         System.out.println("Currently you have the following option:\n");
                         System.out.println(" 1. Update marks of Students assignments.");
                         System.out.println(returnToPrevius());
@@ -218,7 +218,7 @@ public class IndividualProjectB {
                 case 4:
                     boolean deletionNeeded = true;
                     while(deletionNeeded) {
-                        System.out.println("\nD E L E T E    D A T A    M E N U\n");
+                        System.out.println("\n\nD E L E T E    D A T A    M E N U\n");
                         System.out.println("Currently you have the following options:\n");
                         System.out.println("1. Delete Courses.");
                         System.out.println("2. Delete Students.");

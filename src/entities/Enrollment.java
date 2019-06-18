@@ -116,27 +116,34 @@ public class Enrollment {
         CourseDao cdao = new CourseDao();
         boolean courseNeeded = true;
         while (courseNeeded) {
-            Course.printCourses(cdao.getCourses());
-            System.out.println("Select the id of the Course.");
-            System.out.println("Write 'C<' if you want to return to the previous menu.");
-            int choise = Validation.positiveIntValidationWithReturn(scan);
-            if (choise == -1) {
+            List<Course> courses = cdao.getCourses();
+            if(courses.isEmpty()) {
+                System.out.println("*** The Courses list is empty. ***\n\n");
                 courseNeeded = false;
             } else {
-                Course c = cdao.getCourseById(choise);
-                if (c != null) {
-                    System.out.println("You chose the Course '" + c.getCtitle() + "'.");
-                    EnrollmentDao endao = new EnrollmentDao();
-                    List<Student> students = endao.getStudentsPerCourse(c.getId());
-                    System.out.println("\n\nCOURSE " + c.getCtitle());
-                    Student.printStudents(students);
-                    System.out.println("Press 1 to repeat or 'C<' to return the previous menu.");
-                    choise = Validation.maxValidationWithReturn(1, scan);
-                    if(choise== -1) {
-                        courseNeeded = false;
+                Course.printCourses(courses);
+                System.out.println("Select the id of the Course.");
+                System.out.println("Write 'C<' if you want to return to the previous menu.");
+                int choise = Validation.positiveIntValidationWithReturn(scan);
+                if (choise == -1) {
+                    courseNeeded = false;
+                } else {
+                    Course c = cdao.getCourseById(choise);
+                    if (c != null) {
+                        System.out.println("You chose the Course '" + c.getCtitle() + "'.");
+                        EnrollmentDao endao = new EnrollmentDao();
+                        List<Student> students = endao.getStudentsPerCourse(c.getId());
+                        System.out.println("\n\nCOURSE " + c.getCtitle());
+                        Student.printStudents(students);
+                        System.out.println("Press 1 to repeat or 'C<' to return the previous menu.");
+                        choise = Validation.maxValidationWithReturn(1, scan);
+                        if (choise == -1) {
+                            courseNeeded = false;
+                        }
                     }
-                }
+                } 
             }
+
         }
 
     }

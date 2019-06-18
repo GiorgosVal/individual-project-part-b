@@ -204,27 +204,32 @@ public class Assignment {
 //* ------------------------------------------------------------------------- */        
     
     public static void printAssignments(List<Assignment> list) {
-        String line = "-";
-        for (int i = 0; i < 182; i++) {
-            line += "-";
-        }
+        if(list.isEmpty()) {
+            System.out.println("*** The Assignments list is empty. ***\n\n");
+        } else {
+            String line = "-";
+            for (int i = 0; i < 182; i++) {
+                line += "-";
+            }
 
-        System.out.println();
-        System.out.println(line);
-        System.out.printf("%75s%s\n", " ", "A S S I G N M E N T S   L I S T");
-        System.out.println(line);
-        System.out.printf("%-5s%-50s%-70s%-17s%-40s\n", "Id", "Title", "Description", "Submission Date", "Related Course");
-        System.out.println(line);
-        for (Assignment s : list) {
-            int id = s.getId();
-            String title = s.getAtitle();
-            String descr = s.getAdescr();
-            String date = Validation.LocalDate_to_String(s.getAsubDate());
-            String course = s.getAcourseTitle();
-            System.out.printf("%-5s%-50s%-70s%-17s%-40s\n", id, title, descr, date, course);
+            System.out.println();
+            System.out.println(line);
+            System.out.printf("%75s%s\n", " ", "A S S I G N M E N T S   L I S T");
+            System.out.println(line);
+            System.out.printf("%-5s%-50s%-70s%-17s%-40s\n", "Id", "Title", "Description", "Submission Date", "Related Course");
+            System.out.println(line);
+            for (Assignment s : list) {
+                int id = s.getId();
+                String title = s.getAtitle();
+                String descr = s.getAdescr();
+                String date = Validation.LocalDate_to_String(s.getAsubDate());
+                String course = s.getAcourseTitle();
+                System.out.printf("%-5s%-50s%-70s%-17s%-40s\n", id, title, descr, date, course);
+            }
+            System.out.println(line);
+            System.out.println(); 
         }
-        System.out.println(line);
-        System.out.println();
+        
     }
    
    

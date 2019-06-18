@@ -216,27 +216,32 @@ public class Student {
 // Students Print
 //* ------------------------------------------------------------------------- */    
     public static void printStudents(List<Student> list) {
-        String line = "-";
-        for (int i = 0; i < 75; i++) {
-            line += "-";
-        }
+        if(list.isEmpty()) {
+            System.out.println("*** The Students list is empty. ***\n\n");
+        } else {
+            String line = "-";
+            for (int i = 0; i < 75; i++) {
+                line += "-";
+            }
 
-        System.out.println();
-        System.out.println(line);
-        System.out.printf("%25s%s\n", " ", "S T U D E N T S   L I S T");
-        System.out.println(line);
-        System.out.printf("%-5s%-20s%-25s%15s%10s\n", "Id", "First Name", "Last Name", "Date of Birth", "Fees");
-        System.out.println(line);
-        for (Student s : list) {
-            int id = s.getId();
-            String fname = s.getfNameReformed();
-            String lname = s.getlNameReformed();
-            String sdob = Validation.LocalDate_to_String(s.getDob());
-            double sfees = s.getFees();
-            System.out.printf("%-5d%-20s%-25s%15s%10.2f€\n", id, fname, lname, sdob, sfees);
+            System.out.println();
+            System.out.println(line);
+            System.out.printf("%25s%s\n", " ", "S T U D E N T S   L I S T");
+            System.out.println(line);
+            System.out.printf("%-5s%-20s%-25s%15s%10s\n", "Id", "First Name", "Last Name", "Date of Birth", "Fees");
+            System.out.println(line);
+            for (Student s : list) {
+                int id = s.getId();
+                String fname = s.getfNameReformed();
+                String lname = s.getlNameReformed();
+                String sdob = Validation.LocalDate_to_String(s.getDob());
+                double sfees = s.getFees();
+                System.out.printf("%-5d%-20s%-25s%15s%10.2f€\n", id, fname, lname, sdob, sfees);
+            }
+            System.out.println(line);
+            System.out.println(); 
         }
-        System.out.println(line);
-        System.out.println();
+        
     }
 
 //* ------------------------------------------------------------------------- */

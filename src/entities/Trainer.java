@@ -183,24 +183,31 @@ public class Trainer {
 // Trainers Print
 //* ------------------------------------------------------------------------- */    
     public static void printTrainers(List<Trainer> list) {
-        String line = "-";
-        for(int i = 0; i < 95; i++) {line += "-";}
-        
-        System.out.println();
-        System.out.println(line);
-        System.out.printf("%35s%s\n"," ","T R A I N E R S   L I S T");
-        System.out.println(line);
-        System.out.printf("%-5s%-20s%-30s%-40s\n","Id", "First Name", "Last Name", "Subject");
-        System.out.println(line);
-        for (Trainer s : list) {
-            int id = s.getId();
-            String fname = s.getfNameReformed();
-            String lname = s.getlNameReformed();
-            String tsubject = s.getTsubject();
-            System.out.printf("%-5d%-20s%-30s%-40s\n", id, fname, lname, tsubject);
+        if(list.isEmpty()) {
+            System.out.println("*** The Trainers list is empty. ***\n\n");
+        } else {
+            String line = "-";
+            for (int i = 0; i < 95; i++) {
+                line += "-";
+            }
+
+            System.out.println();
+            System.out.println(line);
+            System.out.printf("%35s%s\n", " ", "T R A I N E R S   L I S T");
+            System.out.println(line);
+            System.out.printf("%-5s%-20s%-30s%-40s\n", "Id", "First Name", "Last Name", "Subject");
+            System.out.println(line);
+            for (Trainer s : list) {
+                int id = s.getId();
+                String fname = s.getfNameReformed();
+                String lname = s.getlNameReformed();
+                String tsubject = s.getTsubject();
+                System.out.printf("%-5d%-20s%-30s%-40s\n", id, fname, lname, tsubject);
+            }
+            System.out.println(line);
+            System.out.println();   
         }
-        System.out.println(line);
-        System.out.println();
+        
     }
 
 
