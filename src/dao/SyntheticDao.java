@@ -39,7 +39,7 @@ public class SyntheticDao extends Dao {
             ResultSet rs = st.executeQuery(getSyntheticData);
             closeConnections(rs, st);
         } catch (SQLException ex) {
-            Logger.getLogger(SyntheticDao.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("You have already entered the synthetic data. Proceeding...\n\n\n");
         }
         
     }
